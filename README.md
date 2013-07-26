@@ -1,6 +1,7 @@
 # Rehab
 
-Rehab helps you deal with your coffee dependency
+Rehab helps you deal with your coffee dependency.
+This is modified version of original Vizir/rehab module to include interface appropriate for grunt-contrib-coffee task for GruntJS.
 
 ## Why do you think you're here?
 
