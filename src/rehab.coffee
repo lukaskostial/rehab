@@ -14,9 +14,15 @@ module.exports = class Rehab
   REQ_MAIN_NODE: "__MAIN__"
 
   process: (folder) ->
-    # create a graph from a folder name: 
-    # src/C <- A -> B.coffee -> C
-    depGraph = @processDependencyGraph(folder)
+    files = @getSourceFiles(folder)
+    @processList(files, folder)
+
+  processList: (files, folder) ->
+    
+    if not folder
+      folder = "."
+
+    depGraph = @processDependencyGraph(folder, files)
     #console.log "1: processDependencyGraph", depGraph
 
     # normalize filenames: 
@@ -31,9 +37,9 @@ module.exports = class Rehab
 
     depList.reverse() #yeah!
 
-  processDependencyGraph: (folder) ->
+  processDependencyGraph: (folder, files) ->
     depGraph = []
-    for f in (@getSourceFiles folder)
+    for f in files
       @parseRequiredFile folder, f, depGraph
     depGraph
   
@@ -43,9 +49,13 @@ module.exports = class Rehab
 
       fileDep = @normalizeCoffeeFilename(edge[0])
       file = @normalizeCoffeeFilename(edge[1])
-      
-      fullPath = path.resolve path.dirname(fileDep), file
+
+      fileDep = path.resolve(folder, fileDep)
+
+      fullPath = path.resolve(path.dirname(fileDep),file)
+      fileDep = path.join(folder, path.relative(folder, fileDep))
       file = path.join(folder, path.relative(folder, fullPath))
+
       edge[0..1] = [fileDep, file]
     depGraph
 
