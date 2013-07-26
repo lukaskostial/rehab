@@ -1,7 +1,7 @@
 {
   "name": "grunt-rehab",
   "version": "0.0.1",
-  "description": "Rehab helps you deal with your coffee dependency - This is just a modified version of Vizir/rehab to modify API to be used with grunt-contrib-coffee task for GruntJS.",
+  "description": "Rehab helps you deal with your coffee dependency - GruntJS version",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha --compilers coffee:coffee-script -R spec --require should test/*"
